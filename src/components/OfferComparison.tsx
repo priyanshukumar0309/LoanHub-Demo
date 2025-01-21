@@ -1,13 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Building } from "lucide-react";
 
 export const OfferComparison = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const formData = location.state || {};
 
-  // Mock offers based on form data
   const offers = [
     {
       bank: "Santander",
@@ -28,6 +28,10 @@ export const OfferComparison = () => {
       term: formData.term,
     },
   ];
+
+  const handleSelectOffer = (offer: typeof offers[0]) => {
+    navigate("/terms", { state: { offer } });
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -54,7 +58,10 @@ export const OfferComparison = () => {
                 <p className="text-sm text-gray-600">Loan Term</p>
                 <p className="text-lg">{offer.term} months</p>
               </div>
-              <Button className="w-full bg-volvo-primary hover:bg-volvo-primary/90">
+              <Button 
+                className="w-full bg-volvo-primary hover:bg-volvo-primary/90"
+                onClick={() => handleSelectOffer(offer)}
+              >
                 Select Offer
               </Button>
             </div>
