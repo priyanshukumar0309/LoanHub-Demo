@@ -5,7 +5,7 @@ export const Header = () => {
     <header className="bg-volvo-primary text-white py-4 px-6 flex items-center justify-between">
       <div className="flex items-center space-x-2">
         <Car className="w-8 h-8" />
-        <span className="text-xl font-semibold">Volvo Finance Connect</span>
+        <span className="text-xl font-semibold">Volvo LoanHub</span>
       </div>
       <nav className="hidden md:flex space-x-6">
         <a href="/" className="hover:text-volvo-accent transition-colors">Home</a>
