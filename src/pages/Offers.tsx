@@ -1,13 +1,13 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
+import { OfferComparison } from "@/components/OfferComparison";
 
-const Index = () => {
+const Offers = () => {
   return (
     <div className="min-h-screen bg-volvo-accent">
       <Header />
-      <Hero />
+      <OfferComparison />
     </div>
   );
 };
 
-export default Index;
+export default Offers;
