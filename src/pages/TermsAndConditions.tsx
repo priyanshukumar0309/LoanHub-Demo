@@ -9,6 +9,7 @@ const TermsAndConditions = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const offer = location.state?.offer;
+  const customerData = location.state?.customerData;
 
   if (!offer) {
     navigate("/offers");
@@ -29,12 +30,23 @@ const TermsAndConditions = () => {
       <div className="max-w-4xl mx-auto p-6">
         <Card className="p-8">
           <h2 className="text-3xl font-bold text-volvo-primary mb-6">Terms and Conditions</h2>
+          
           <div className="space-y-4 text-left mb-8">
-            <h3 className="text-xl font-semibold">Loan Details</h3>
-            <p>Bank: {offer.bank}</p>
-            <p>Interest Rate: {offer.rate}</p>
-            <p>Monthly Payment: €{Math.round(offer.monthly).toLocaleString()}</p>
-            <p>Term: {offer.term} months</p>
+            <h3 className="text-xl font-semibold">Customer Information</h3>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p>Full Name: {customerData?.fullName}</p>
+              <p>Email: {customerData?.email}</p>
+              <p>Phone: {customerData?.phone}</p>
+              <p>Personal Identity Number: {customerData?.identificationNumber}</p>
+            </div>
+            
+            <h3 className="text-xl font-semibold mt-6">Loan Details</h3>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p>Bank: {offer.bank}</p>
+              <p>Interest Rate: {offer.rate}</p>
+              <p>Monthly Payment: €{Math.round(offer.monthly).toLocaleString()}</p>
+              <p>Term: {offer.term} months</p>
+            </div>
             
             <h3 className="text-xl font-semibold mt-6">General Terms</h3>
             <p>1. This agreement is between you and {offer.bank} for vehicle financing.</p>
