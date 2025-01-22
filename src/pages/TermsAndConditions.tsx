@@ -37,7 +37,7 @@ const TermsAndConditions = () => {
               <p>Full Name: {customerData?.fullName}</p>
               <p>Email: {customerData?.email}</p>
               <p>Phone: {customerData?.phone}</p>
-              <p>Personal Identity Number: {customerData?.identificationNumber}</p>
+              <p>SPID Code: {customerData?.spidCode}</p>
             </div>
             
             <h3 className="text-xl font-semibold mt-6">Loan Details</h3>

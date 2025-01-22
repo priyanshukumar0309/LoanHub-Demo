@@ -9,19 +9,22 @@ export const OfferComparison = () => {
 
   const offers = [
     {
-      bank: "Nordea Bank",
+      bank: "Santander",
+      logo: "/placeholder.svg",
       rate: "3.5%",
       monthly: 450,
       term: 60,
     },
     {
-      bank: "SEB Bank",
+      bank: "UniCredit",
+      logo: "/placeholder.svg",
       rate: "3.8%",
       monthly: 460,
       term: 60,
     },
     {
-      bank: "Swedbank",
+      bank: "BNP Paribas",
+      logo: "/placeholder.svg",
       rate: "4.0%",
       monthly: 470,
       term: 60,
@@ -44,7 +47,14 @@ export const OfferComparison = () => {
         {offers.map((offer, index) => (
           <Card key={index}>
             <CardHeader>
-              <CardTitle>{offer.bank}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>{offer.bank}</CardTitle>
+                <img 
+                  src={offer.logo} 
+                  alt={`${offer.bank} logo`} 
+                  className="h-8 w-auto object-contain"
+                />
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>

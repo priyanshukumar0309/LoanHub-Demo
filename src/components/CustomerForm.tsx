@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 export const CustomerForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: "John Anderson",
-    email: "john.anderson@example.com",
-    phone: "+46 70 123 4567",
-    identificationNumber: "19800101-1234",
+    fullName: "Marco Rossi",
+    email: "marco.rossi@example.com",
+    phone: "+39 333 123 4567",
+    spidCode: "SPID-123456789",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -56,14 +56,17 @@ export const CustomerForm = () => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="identificationNumber">Personal Identity Number</Label>
+          <Label htmlFor="spidCode">SPID Code</Label>
           <Input
-            id="identificationNumber"
-            value={formData.identificationNumber}
-            onChange={(e) => setFormData({ ...formData, identificationNumber: e.target.value })}
+            id="spidCode"
+            value={formData.spidCode}
+            onChange={(e) => setFormData({ ...formData, spidCode: e.target.value })}
             required
             className="border-volvo-secondary"
           />
+          <p className="text-sm text-gray-500 mt-1">
+            Enter your SPID (Sistema Pubblico di Identità Digitale) code
+          </p>
         </div>
         <Button 
           type="submit"
