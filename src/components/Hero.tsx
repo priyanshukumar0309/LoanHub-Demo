@@ -5,20 +5,20 @@ export const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-volvo-primary text-white py-20 px-6 md:py-32">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeIn">
-          Finance Your Volvo Journey
+    <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-volvo-accent to-white">
+      <div className="text-center space-y-8 p-6">
+        <h1 className="text-5xl font-bold text-volvo-primary">
+          Welcome to Volvo LoanHub
         </h1>
-        <p className="text-lg md:text-xl mb-8 text-gray-200 animate-fadeIn">
-          Discover personalized financing solutions from trusted partners.
-          Compare rates and find the perfect plan for your new Volvo.
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          Experience hassle-free car financing with competitive rates and flexible terms.
+          Start your journey towards owning your dream Volvo today.
         </p>
         <Button 
-          onClick={() => navigate("/calculator")}
-          className="bg-white text-volvo-primary hover:bg-volvo-accent px-8 py-6 text-lg animate-fadeIn"
+          onClick={() => navigate("/customer-details")}
+          className="bg-volvo-primary hover:bg-volvo-primary/90 text-white px-8 py-6 text-lg"
         >
-          Start Your Application
+          Start Application
         </Button>
       </div>
     </div>
