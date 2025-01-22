@@ -2,20 +2,28 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const FinanceCalculator = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const customerData = location.state;
+
   const [formData, setFormData] = useState({
-    carPrice: "",
-    downPayment: "",
-    income: "",
-    term: "",
+    carPrice: "45000",
+    downPayment: "5000",
+    income: "3500",
+    term: "48",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/offers", { state: formData });
+    navigate("/offers", { 
+      state: {
+        ...formData,
+        customerData
+      }
+    });
   };
 
   return (
