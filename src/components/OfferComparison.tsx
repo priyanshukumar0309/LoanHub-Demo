@@ -27,6 +27,8 @@ export const OfferComparison = () => {
       { name: "Santander", logo: "/santander.svg" },
       { name: "UniCredit", logo: "/uni.png" },
       { name: "BNP Paribas", logo: "/bnp.svg" },
+      { name: "Intesa Sanpaolo", logo: "/intesa.jpeg" }, // New option 1
+      { name: "Revolut", logo: "/revolut.png" } // New option 2
     ];
 
     // Generate offers dynamically
@@ -55,14 +57,28 @@ export const OfferComparison = () => {
     navigate("/terms", { state: { offer, customerData } });
   };
 
+  // Function to find the offer with the minimum EMI
+  const getOfferWithMinEMI = (offers: any[]) => {
+    return offers.reduce((minOffer, currentOffer) => {
+      return currentOffer.monthly < minOffer.monthly ? currentOffer : minOffer;
+    });
+  };
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h2 className="text-3xl font-bold text-volvo-primary mb-6">Compare Financing Offers</h2>
 
       {/* Offer Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {offers.map((offer, index) => (
-          <Card key={index} className="border border-gray-200 rounded-lg shadow-lg p-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {offers.map((offer, index) => {
+        // Identify the offer with the minimum EMI
+        const minEMIOffer = getOfferWithMinEMI(offers);
+        const isMinEMI = offer.monthly === minEMIOffer.monthly;
+
+        return (
+          <Card
+            key={index}
+            className={`border border-gray-200 rounded-lg shadow-lg p-4 ${isMinEMI ? 'bg-green-100' : ''}`} // Apply green background for minimum EMI offer
+          >
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>{offer.bank}</CardTitle>
@@ -106,8 +122,9 @@ export const OfferComparison = () => {
               </Button>
             </CardContent>
           </Card>
-        ))}
-      </div>
+        );
+      })}
     </div>
-  );
+  </div>
+);
 };
