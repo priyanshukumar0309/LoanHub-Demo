@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 export const Hero = () => {
   const navigate = useNavigate();
@@ -7,9 +9,11 @@ export const Hero = () => {
   return (
     <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-volvo-accent to-white">
       <div className="text-center space-y-8 p-6">
-        <h1 className="text-5xl font-bold text-volvo-primary">
+      <h1 className="text-5xl font-bold text-volvo-primary">
+        <Link to="/" className="hover:text-volvo-accent transition-colors">
           Welcome to Volvo LoanHub
-        </h1>
+        </Link>
+      </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
           Experience hassle-free car financing with competitive rates and flexible terms.
           Start your journey towards owning your dream Volvo today.

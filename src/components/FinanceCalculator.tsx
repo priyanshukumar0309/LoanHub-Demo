@@ -10,14 +10,20 @@ export const FinanceCalculator = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const customerData = location.state;
-
+  
   const [carPrice, setCarPrice] = useState(35000);
   const [downPayment, setDownPayment] = useState(5000);
   const [income, setIncome] = useState(4000);
   const [term, setTerm] = useState(60);
 
   const handleCalculate = () => {
-    navigate("/offers", { state: { customerData } });
+    const financeData = {
+      carPrice,
+      downPayment,
+      income,
+      term,
+    };
+    navigate("/offers", { state: { financeData, customerData } });
   };
 
   return (

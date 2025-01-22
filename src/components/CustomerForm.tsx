@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export const CustomerForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [customerData, setFormData] = useState({
     fullName: "Marco Rossi",
     email: "marco.rossi@example.com",
     phone: "+39 333 123 4567",
@@ -15,7 +15,7 @@ export const CustomerForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/calculator", { state: formData });
+    navigate("/calculator", { state: customerData });
   };
 
   return (
@@ -28,8 +28,8 @@ export const CustomerForm = () => {
           <Label htmlFor="fullName">Full Name</Label>
           <Input
             id="fullName"
-            value={formData.fullName}
-            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            value={customerData.fullName}
+            onChange={(e) => setFormData({ ...customerData, fullName: e.target.value })}
             required
             className="border-volvo-secondary"
           />
@@ -39,8 +39,8 @@ export const CustomerForm = () => {
           <Input
             id="email"
             type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            value={customerData.email}
+            onChange={(e) => setFormData({ ...customerData, email: e.target.value })}
             required
             className="border-volvo-secondary"
           />
@@ -49,8 +49,8 @@ export const CustomerForm = () => {
           <Label htmlFor="phone">Phone Number</Label>
           <Input
             id="phone"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            value={customerData.phone}
+            onChange={(e) => setFormData({ ...customerData, phone: e.target.value })}
             required
             className="border-volvo-secondary"
           />
@@ -59,8 +59,8 @@ export const CustomerForm = () => {
           <Label htmlFor="spidCode">SPID Code</Label>
           <Input
             id="spidCode"
-            value={formData.spidCode}
-            onChange={(e) => setFormData({ ...formData, spidCode: e.target.value })}
+            value={customerData.spidCode}
+            onChange={(e) => setFormData({ ...customerData, spidCode: e.target.value })}
             required
             className="border-volvo-secondary"
           />
