@@ -7,7 +7,7 @@ export const Header = () => {
       {/* Logo */}
       <a href="/" className="flex items-center space-x-2">
         <Car className="w-8 h-8" />
-        <span className="text-xl font-semibold">Volvo LoanHub</span>
+        <span className="text-xl font-semibold">Car LoanHub</span>
       </a>
 
       {/* Mobile Hamburger Icon */}
