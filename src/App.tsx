@@ -9,6 +9,7 @@ import Calculator from "./pages/Calculator";
 import Offers from "./pages/Offers";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Success from "./pages/Success";
+import About from "./pages/About"
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,8 @@ const App = () => (
           <Route path="/offers" element={<Offers />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/About" element={<About />} />
+
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

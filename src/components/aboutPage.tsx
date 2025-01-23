@@ -1,12 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 
-export const aboutPage = () => {
-  const navigate = useNavigate();
-
-  
+export const AboutPage = () => {
   return (
     <div className="max-w-3xl mx-auto p-6">
       <Card>
@@ -15,48 +12,86 @@ export const aboutPage = () => {
           <div className="space-y-6">
             {/* Product Description */}
             <section>
-              <h3 className="text-2xl font-semibold mb-4">Product Overview</h3>
+              <h3 className="text-2xl font-semibold mb-4">Platform Overview</h3>
               <p className="text-lg text-gray-700">
-                Our innovative product brings together advanced technology and user-friendly design, providing you with the best experience. Built for reliability and durability, it is tailored to meet the needs of both everyday users and professionals alike. Whether you're driving around the city or embarking on an adventure, this product guarantees comfort, efficiency, and style.
+                Our platform brings all the leasing and loan options to one place, allowing you to compare and select the best offers for your needs. With an intuitive and user-friendly interface, our service streamlines the process of finding financing solutions for your car, helping you make an informed decision. Whether you're looking for car leasing, loans, or personalized finance options, we've got it all in one spot.
               </p>
             </section>
 
-            {/* Product Features */}
+            {/* Key Features */}
             <section>
               <h3 className="text-2xl font-semibold mb-4">Key Features</h3>
-              <ul className="list-disc pl-6 text-lg text-gray-700 space-y-2">
-                <li>High-quality construction for long-lasting performance</li>
-                <li>State-of-the-art technology for enhanced user experience</li>
-                <li>Eco-friendly and energy-efficient design</li>
-                <li>Compatible with a wide range of devices</li>
-                <li>Easy setup and intuitive controls</li>
-              </ul>
+              <Accordion type="single" collapsible className="space-y-4">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-lg text-gray-700 font-semibold">
+                    Compare Multiple Financing Options
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p>View leasing and loan offers from various providers with detailed breakdowns of interest rates, terms, and conditions.</p>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-lg text-gray-700 font-semibold">
+                    Personalized Recommendations
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p>Get recommendations tailored to your financial profile, ensuring the best options for you.</p>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-lg text-gray-700 font-semibold">
+                    Real-time Application Tracking
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p>Track your loan or lease application status in real-time, so you're always up-to-date with your process.</p>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-lg text-gray-700 font-semibold">
+                    One-Stop Platform
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p>All financing options are available in one place, saving you time and effort when comparing providers.</p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
-            {/* Product Specifications */}
+            {/* How It Works */}
             <section>
-              <h3 className="text-2xl font-semibold mb-4">Specifications</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex justify-between">
-                  <span className="font-semibold text-lg">Dimensions:</span>
-                  <span className="text-gray-700">120cm x 50cm x 40cm</span>
+              <h3 className="text-2xl font-semibold mb-4">How It Works</h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
+                    <Badge className="bg-volvo-primary text-white">1</Badge>
+                  </div>
+                  <div className="text-lg text-gray-700">
+                    <h4 className="font-semibold">Step 1: Enter Your Information</h4>
+                    <p>Simply input your financial details, including your budget, income, and credit score, to help us provide the best options for you.</p>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-lg">Weight:</span>
-                  <span className="text-gray-700">15 kg</span>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
+                    <Badge className="bg-volvo-primary text-white">2</Badge>
+                  </div>
+                  <div className="text-lg text-gray-700">
+                    <h4 className="font-semibold">Step 2: Compare Offers</h4>
+                    <p>View various leasing and loan offers from multiple providers, complete with interest rates, terms, and monthly payments.</p>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-lg">Power Consumption:</span>
-                  <span className="text-gray-700">200W</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-lg">Warranty:</span>
-                  <span className="text-gray-700">2 years</span>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
+                    <Badge className="bg-volvo-primary text-white">3</Badge>
+                  </div>
+                  <div className="text-lg text-gray-700">
+                    <h4 className="font-semibold">Step 3: Apply and Get Approved</h4>
+                    <p>Once you've selected the best option, apply directly through the platform, and track your application's progress.</p>
+                  </div>
                 </div>
               </div>
             </section>
 
-            
+           
           </div>
         </CardContent>
       </Card>

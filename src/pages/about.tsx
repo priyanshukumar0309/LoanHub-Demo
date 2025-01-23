@@ -1,13 +1,13 @@
 import { Header } from "@/components/Header";
-import { aboutPage } from "@/components/aboutPage";
+import { AboutPage } from "@/components/AboutPage";
 
-const aboutPage = () => {
+const About = () => {
   return (
     <div className="min-h-screen bg-volvo-accent">
       <Header />
-      <aboutPage />
+      <AboutPage />
     </div>
   );
 };
 
-export default aboutPage;
+export default About;
