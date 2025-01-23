@@ -8,14 +8,22 @@ export const Hero = () => {
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-volvo-accent to-white">
+       <div className=" flex justify-center mb-8">
+        <img 
+          src="/volvo.png" 
+          alt="Hero Image" 
+          className="w-full max-w-[600px] h-auto object-contain"
+        />
+      </div>
       <div className="text-center space-y-8 p-6">
       <h1 className="text-5xl font-bold text-volvo-primary">
         <Link to="/" className="hover:text-volvo-accent transition-colors">
           Welcome to Volvo LoanHub
         </Link>
       </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p className="text-l text-gray-600 max-w-2xl mx-auto">
           Experience hassle-free car financing with competitive rates and flexible terms.
+          <br></br>
           Start your journey towards owning your dream Volvo today.
         </p>
         <Button 
