@@ -18,13 +18,13 @@ export const Hero = () => {
       <div className="text-center space-y-8 p-6">
       <h1 className="text-5xl font-bold text-volvo-primary">
         <Link to="/" className="hover:text-volvo-accent transition-colors">
-          Welcome to Volvo LoanHub
+          Welcome to Car LoanHub
         </Link>
       </h1>
         <p className="text-l text-gray-600 max-w-2xl mx-auto">
           Experience hassle-free car financing with competitive rates and flexible terms.
           <br></br>
-          Start your journey towards owning your dream Volvo today.
+          Start your journey towards owning your dream Car today.
         </p>
         <Button 
           onClick={() => navigate("/customer-details")}
