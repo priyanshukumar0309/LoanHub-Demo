@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive'; // Assuming this is used to detect screen size
+
 
 export const OfferComparison = () => {
   const location = useLocation();
@@ -10,10 +12,11 @@ export const OfferComparison = () => {
   const customerData = location.state?.customerData;
   const financeData = location.state?.financeData;
   const [activeTab, setActiveTab] = useState("traditional");
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const financingCategories = {
     traditional: {
-      title: "Traditional Auto Loan",
+      title: "Loan",
       description: "Fixed monthly payments with full ownership at the end",
       keyMetrics: ["Interest Rate", "Monthly Payment", "Term", "Down Payment", "Total Interest"]
     },
@@ -209,32 +212,35 @@ export const OfferComparison = () => {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h2 className="text-3xl font-bold text-volvo-primary mb-4">Compare Financing Options</h2>
-      
+
+      {/* Tab Section */}
       <Tabs defaultValue="traditional" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="mb-8">
+        {/* On mobile, use vertical tabs layout */}
+        <TabsList
+          className={`mb-8 flex ${isMobile ? 'flex-col' : 'flex-wrap space-x-4'} overflow-x-auto`}
+        >
           {Object.entries(financingCategories).map(([key, category]) => (
-            <TabsTrigger key={key} value={key} className="px-8">
+            <TabsTrigger
+              key={key}
+              value={key}
+              className={`px-8 py-2 whitespace-nowrap ${isMobile ? 'text-center' : ''}`}
+            >
               {category.title}
             </TabsTrigger>
           ))}
         </TabsList>
 
-        {Object.entries(financingCategories).map(([key, category]) => (
-          <TabsContent key={key} value={key}>
-            <div className="mb-8">
-              <p className="text-gray-600">{category.description}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {generateOffers(key).map((offer: any, _index: any) => {
-                return renderOfferCard(offer);
-              })}
-            </div>
-          </TabsContent>
-        ))}
+        {/* Tabs Content */}
+        <TabsContent value={activeTab}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {generateOffers(activeTab).map((offer, index) => (
+              <div key={index} className="w-full">
+                {renderOfferCard(offer)}
+              </div>
+            ))}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
 };
-
-export default OfferComparison;

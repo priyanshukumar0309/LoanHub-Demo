@@ -7,7 +7,7 @@ export const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-volvo-accent to-white">
+    <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center  from-volvo-accent to-white">
        <div className=" flex justify-center mb-8">
         <img 
           src="/volvo.png" 
