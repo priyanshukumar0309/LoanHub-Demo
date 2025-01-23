@@ -12,7 +12,7 @@ export const Header = () => {
       <nav className="hidden md:flex space-x-6">
         <a href="/" className="hover:text-volvo-accent transition-colors">Home</a>
         <a href="/calculator" className="hover:text-volvo-accent transition-colors">Calculator</a>
-        <a href="#" className="hover:text-volvo-accent transition-colors">About</a>
+        <a href="/about" className="hover:text-volvo-accent transition-colors">About</a>
       </nav>
     </header>
   );

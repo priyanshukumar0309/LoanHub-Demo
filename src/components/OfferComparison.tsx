@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const OfferComparison = () => {
@@ -7,124 +9,232 @@ export const OfferComparison = () => {
   const navigate = useNavigate();
   const customerData = location.state?.customerData;
   const financeData = location.state?.financeData;
+  const [activeTab, setActiveTab] = useState("traditional");
 
-  const calculateEMI = (loanAmount: number, rate: number, tenure: number) => {
-    const monthlyRate = rate / 12 / 100; // Convert annual rate to monthly
+  const financingCategories = {
+    traditional: {
+      title: "Traditional Auto Loan",
+      description: "Fixed monthly payments with full ownership at the end",
+      keyMetrics: ["Interest Rate", "Monthly Payment", "Term", "Down Payment", "Total Interest"]
+    },
+    lease: {
+      title: "Leasing",
+      description: "Lower monthly payments with flexible end-of-term options",
+      keyMetrics: ["Monthly Payment", "Term", "Down Payment", "Residual Value", "Mileage Limit"]
+    },
+    balloon: {
+      title: "Balloon Financing",
+      description: "Reduced monthly payments with final balloon payment",
+      keyMetrics: ["Interest Rate", "Monthly Payment", "Term", "Balloon Amount", "Total Cost"]
+    }
+  };
+
+  const bankData = {
+    traditional: [
+      { name: "Intesa Sanpaolo", logo: "/intesa.jpeg" },
+      { name: "UniCredit", logo: "/uni.png" },
+      { name: "BNP Paribas", logo: "/bnp.svg" }
+    ],
+    lease: [
+      { name: "Santander", logo: "/santander.svg" },
+      { name: "Intesa Sanpaolo", logo: "/intesa.jpeg" }
+    ],
+    balloon: [
+      { name: "UniCredit", logo: "/uni.png" },
+      { name: "BNP Paribas", logo: "/bnp.svg" }
+    ]
+  };
+
+  const calculateOfferDetails = (bank, category) => {
+    const loanAmount = financeData.carPrice - financeData.downPayment;
+    const term = financeData.term;
+    const baseRate = Math.random() * (5 - 2) + 2;
+
+    switch(category) {
+      case "traditional":
+        const monthlyRate = baseRate / 12 / 100;
+        const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, term)) / 
+          (Math.pow(1 + monthlyRate, term) - 1);
+        const totalInterest = (monthlyPayment * term) - loanAmount;
+        
+        return {
+          bank: bank.name,
+          logo: bank.logo,
+          monthly: Math.round(monthlyPayment),
+          rate: `${baseRate.toFixed(2)}%`,
+          term,
+          downPayment: financeData.downPayment,
+          totalInterest: Math.round(totalInterest),
+          totalCost: Math.round(monthlyPayment * term),
+          highlights: [
+            { label: "Interest Rate", value: `${baseRate.toFixed(2)}%` },
+            { label: "Monthly Payment", value: `€ ${Math.round(monthlyPayment)}` },
+            { label: "Total Interest", value: `€ ${Math.round(totalInterest)}` }
+          ]
+        };
+
+      case "lease":
+        const residualValue = financeData.carPrice * 0.4;
+        const depreciationCost = (financeData.carPrice - residualValue) / term;
+        const leasePayment = depreciationCost + (financeData.carPrice * 0.003);
+        
+        return {
+          bank: bank.name,
+          logo: bank.logo,
+          monthly: Math.round(leasePayment),
+          term,
+          downPayment: financeData.downPayment,
+          residualValue: Math.round(residualValue),
+          mileageLimit: "15K km/year",
+          totalCost: Math.round(leasePayment * term + financeData.downPayment),
+          highlights: [
+            { label: "Monthly Payment", value: `€ ${Math.round(leasePayment)}` },
+            { label: "Mileage Limit", value: "15K km/year" },
+            { label: "Residual Value", value: `€ ${Math.round(residualValue)}` }
+          ]
+        };
+
+      case "balloon":
+        const balloonAmount = loanAmount * 0.3;
+        const reducedLoan = loanAmount - balloonAmount;
+        const balloonRate = baseRate / 12 / 100;
+        const balloonMonthly = (reducedLoan * balloonRate * Math.pow(1 + balloonRate, term)) /
+          (Math.pow(1 + balloonRate, term) - 1);
+        
+        return {
+          bank: bank.name,
+          logo: bank.logo,
+          monthly: Math.round(balloonMonthly),
+          rate: `${baseRate.toFixed(2)}%`,
+          term,
+          downPayment: financeData.downPayment,
+          balloonAmount: Math.round(balloonAmount),
+          totalCost: Math.round(balloonMonthly * term + balloonAmount),
+          highlights: [
+            { label: "Monthly Payment", value: `€ ${Math.round(balloonMonthly)}` },
+            { label: "Balloon Payment", value: `€ ${Math.round(balloonAmount)}` },
+            { label: "Interest Rate", value: `${baseRate.toFixed(2)}%` }
+          ]
+        };
+    }
+  };
+
+  const generateOffers = (category) => {
+    return bankData[category].map(bank => calculateOfferDetails(bank, category));
+  };
+
+  const handleSelectOffer = (offer, category) => {
+    const offerDetails = {
+      category:category, // Add the category (e.g., "traditional", "lease", "balloon")
+      bank: offer.bank,
+      logo: offer.logo,
+      monthly: offer.monthly,
+      rate: offer.rate,
+      term: offer.term,
+      downPayment: offer.downPayment,
+      totalCost: offer.totalCost,
+      ...(category === "lease" && {
+        residualValue: offer.residualValue,
+        mileageLimit: offer.mileageLimit,
+      }),
+      ...(category === "balloon" && {
+        balloonAmount: offer.balloonAmount,
+      }),
+    };
+
+    navigate("/terms", { state: { offerDetails, customerData } });
+  };
+
+  const renderOfferCard = (offer) => {
     return (
-      loanAmount *
-      monthlyRate *
-      Math.pow(1 + monthlyRate, tenure) /
-      (Math.pow(1 + monthlyRate, tenure) - 1)
+      <Card className="border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between mb-4">
+            <img 
+              src={offer.logo} 
+              alt={`${offer.bank} logo`} 
+              className="h-12 w-24 object-contain"
+            />
+          </div>
+          <CardTitle className="text-xl font-bold text-volvo-primary">{offer.bank}</CardTitle>
+        </CardHeader>
+
+        <CardContent className="pt-6">
+          {/* Highlight Box */}
+          <div className="bg-gray-50 p-4 rounded-lg mb-6">
+            {offer.highlights.map((highlight, index) => (
+              <div key={index} className="mb-2 last:mb-0 flex justify-between items-center">
+                <p className="text-sm text-gray-600">{highlight.label}</p>
+                <p className="text-xl font-bold text-volvo-primary">{highlight.value}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional Details */}
+          <div className="space-y-4 mb-6">
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-600">Term</span>
+              <span className="font-semibold">{offer.term} months</span>
+            </div>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-600">Down Payment</span>
+              <span className="font-semibold">€ {offer.downPayment}</span>
+            </div>
+          </div>
+
+          {/* End of Term Details */}
+          <div className="border-t pt-4 mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-gray-600">Total Cost</span>
+              <span className="font-bold text-volvo-primary">€ {offer.totalCost}</span>
+            </div>
+            <p className="text-xs text-gray-500">
+              {activeTab === "traditional" && "Full ownership after completion"}
+              {activeTab === "lease" && "Option to buy, return, or upgrade"}
+              {activeTab === "balloon" && `Final balloon payment: € ${offer.balloonAmount}`}
+            </p>
+          </div>
+
+          <Button 
+            onClick={() => handleSelectOffer(offer, activeTab)}
+            className="w-full bg-volvo-primary hover:bg-volvo-primary/90 text-white py-2 rounded-lg transition-colors duration-200"
+          >
+            Select This Offer
+          </Button>
+        </CardContent>
+      </Card>
     );
   };
 
-  const generateOffers = () => {
-    const loanAmount = financeData.carPrice - financeData.downPayment;
-    const term = financeData.term;
-
-    // Bank data with logos
-    const bankData = [
-      { name: "Santander", logo: "/santander.svg" },
-      { name: "UniCredit", logo: "/uni.png" },
-      { name: "BNP Paribas", logo: "/bnp.svg" },
-      { name: "Intesa Sanpaolo", logo: "/intesa.jpeg" }, // New option 1
-      { name: "Revolut", logo: "/revolut.png" } // New option 2
-    ];
-
-    // Generate offers dynamically
-    // Generate offers dynamically
-    return bankData.map((bank) => {
-      const rate = Math.random() * (5 - 2) + 2; // Random rate between 2% and 5%
-      const emi = calculateEMI(loanAmount, rate, term);
-      const totalPaid = Math.round(emi * term);
-
-      return {
-        bank: bank.name,
-        logo: bank.logo,
-        rate: `${rate.toFixed(2)}%`,
-        monthly: Math.round(emi),
-        term,
-        loanAmount,
-        downPayment: financeData.downPayment,
-        totalPaid,
-      };
-    });
-  };
-
-  const offers = generateOffers();
-
-  const handleSelectOffer = (offer: any) => {
-    navigate("/terms", { state: { offer, customerData } });
-  };
-
-  // Function to find the offer with the minimum EMI
-  const getOfferWithMinEMI = (offers: any[]) => {
-    return offers.reduce((minOffer, currentOffer) => {
-      return currentOffer.monthly < minOffer.monthly ? currentOffer : minOffer;
-    });
-  };
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-volvo-primary mb-6">Compare Financing Offers</h2>
+      <h2 className="text-3xl font-bold text-volvo-primary mb-4">Compare Financing Options</h2>
+      
+      <Tabs defaultValue="traditional" className="w-full" onValueChange={setActiveTab}>
+        <TabsList className="mb-8">
+          {Object.entries(financingCategories).map(([key, category]) => (
+            <TabsTrigger key={key} value={key} className="px-8">
+              {category.title}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {/* Offer Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {offers.map((offer, index) => {
-        // Identify the offer with the minimum EMI
-        const minEMIOffer = getOfferWithMinEMI(offers);
-        const isMinEMI = offer.monthly === minEMIOffer.monthly;
-
-        return (
-          <Card
-            key={index}
-            className={`border border-gray-200 rounded-lg shadow-lg p-4 ${isMinEMI ? 'bg-green-100' : ''}`} // Apply green background for minimum EMI offer
-          >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>{offer.bank}</CardTitle>
-                <img 
-                  src={offer.logo} 
-                  alt={`${offer.bank} logo`} 
-                  className="h-10 w-20 object-contain" // Fixed size for the logo
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Interest Rate:</span>
-                <span>{offer.rate}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Monthly Payment:</span>
-                <span>€{offer.monthly.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Term:</span>
-                <span>{offer.term} months</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Loan Amount:</span>
-                <span>€{offer.loanAmount.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Down Payment:</span>
-                <span>€{offer.downPayment.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">Total Paid:</span>
-                <span>€{offer.totalPaid.toLocaleString()}</span>
-              </div>
-              <Button 
-                onClick={() => handleSelectOffer(offer)}
-                className="w-full bg-volvo-primary hover:bg-volvo-primary/90"
-              >
-                Select This Offer
-              </Button>
-            </CardContent>
-          </Card>
-        );
-      })}
+        {Object.entries(financingCategories).map(([key, category]) => (
+          <TabsContent key={key} value={key}>
+            <div className="mb-8">
+              <p className="text-gray-600">{category.description}</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {generateOffers(key).map((offer: any, _index: any) => {
+                return renderOfferCard(offer);
+              })}
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
     </div>
-  </div>
-);
+  );
 };
+
+export default OfferComparison;
