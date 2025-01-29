@@ -10,6 +10,7 @@ import Offers from "./pages/Offers";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Success from "./pages/Success";
 import About from "./pages/About"
+import PersonaPage from "./pages/FI";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/customer-details" element={<CustomerDetails />} />
           <Route path="/calculator" element={<Calculator />} />
+          <Route path="/FI" element={<PersonaPage />} />
+
           <Route path="/offers" element={<Offers />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/success" element={<Success />} />

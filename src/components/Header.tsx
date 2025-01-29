@@ -26,6 +26,9 @@ export const Header = () => {
               <a href="/calculator">Calculator</a>
             </DropdownMenu.Item>
             <DropdownMenu.Item className="cursor-pointer px-4 py-2 hover:bg-gray-100 rounded-md">
+              <a href="/FI">FI Manager</a>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className="cursor-pointer px-4 py-2 hover:bg-gray-100 rounded-md">
               <a href="/about">About</a>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
@@ -40,9 +43,13 @@ export const Header = () => {
         <a href="/calculator" className="hover:text-volvo-accent transition-colors">
           Calculator
         </a>
+        <a href="/FI" className="hover:text-volvo-accent transition-colors">
+          FI Manager
+        </a>
         <a href="/about" className="hover:text-volvo-accent transition-colors">
           About
         </a>
+        
       </nav>
     </header>
   );

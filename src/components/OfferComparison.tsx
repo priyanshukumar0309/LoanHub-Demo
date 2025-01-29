@@ -23,7 +23,7 @@ export const OfferComparison = () => {
     lease: {
       title: "Leasing",
       description: "Lower monthly payments with flexible end-of-term options",
-      keyMetrics: ["Monthly Payment", "Term", "Down Payment", "Residual Value", "Mileage Limit"]
+      keyMetrics: ["Monthly Payment", "Term", "Down Payment", "Total Lease", "Residual Value", "Mileage Limit"]
     },
     balloon: {
       title: "Balloon Financing",
@@ -58,7 +58,7 @@ export const OfferComparison = () => {
         const monthlyRate = baseRate / 12 / 100;
         const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, term)) / 
           (Math.pow(1 + monthlyRate, term) - 1);
-        const totalInterest = (monthlyPayment * term) - loanAmount;
+        const totalInterest = (monthlyPayment * term) ;
         
         return {
           bank: bank.name,
@@ -68,7 +68,7 @@ export const OfferComparison = () => {
           term,
           downPayment: financeData.downPayment,
           totalInterest: Math.round(totalInterest),
-          totalCost: Math.round(monthlyPayment * term),
+          totalCost: Math.round(monthlyPayment * term + financeData.downPayment ),
           highlights: [
             { label: "Interest Rate", value: `${baseRate.toFixed(2)}%` },
             { label: "Monthly Payment", value: `€ ${Math.round(monthlyPayment)}` },
@@ -77,10 +77,10 @@ export const OfferComparison = () => {
         };
 
       case "lease":
-        const residualValue = financeData.carPrice * 0.4;
+        const residualValue = financeData.carPrice * 0.4* Math.random();
         const depreciationCost = (financeData.carPrice - residualValue) / term;
-        const leasePayment = depreciationCost + (financeData.carPrice * 0.003);
-        
+        const leasePayment = depreciationCost + (financeData.carPrice * 0.002 * Math.random());
+        const totalLease = (leasePayment * term) ;
         return {
           bank: bank.name,
           logo: bank.logo,
@@ -88,12 +88,14 @@ export const OfferComparison = () => {
           term,
           downPayment: financeData.downPayment,
           residualValue: Math.round(residualValue),
-          mileageLimit: "15K km/year",
-          totalCost: Math.round(leasePayment * term + financeData.downPayment),
+          mileageLimit: "15K km/y",
+          totalLease :Math.round(leasePayment * term),
+          totalCost: Math.round(leasePayment * term + financeData.downPayment +residualValue),
           highlights: [
             { label: "Monthly Payment", value: `€ ${Math.round(leasePayment)}` },
-            { label: "Mileage Limit", value: "15K km/year" },
-            { label: "Residual Value", value: `€ ${Math.round(residualValue)}` }
+            { label: "Total Lease", value: `€ ${Math.round(totalLease)}` },
+            { label: "Residual Value", value: `€ ${Math.round(residualValue)}` },
+            { label: "Mileage Limit", value: "15K km/y" }
           ]
         };
 
@@ -103,7 +105,7 @@ export const OfferComparison = () => {
         const balloonRate = baseRate / 12 / 100;
         const balloonMonthly = (reducedLoan * balloonRate * Math.pow(1 + balloonRate, term)) /
           (Math.pow(1 + balloonRate, term) - 1);
-        
+        const ballonTotalInterest = (balloonMonthly * term) ;
         return {
           bank: bank.name,
           logo: bank.logo,
@@ -111,10 +113,12 @@ export const OfferComparison = () => {
           rate: `${baseRate.toFixed(2)}%`,
           term,
           downPayment: financeData.downPayment,
+          ballonTotalInterest:Math.round(ballonTotalInterest),
           balloonAmount: Math.round(balloonAmount),
-          totalCost: Math.round(balloonMonthly * term + balloonAmount),
+          totalCost: Math.round(balloonMonthly * term + balloonAmount + financeData.downPayment),
           highlights: [
             { label: "Monthly Payment", value: `€ ${Math.round(balloonMonthly)}` },
+            { label: "Total Interest", value: `€ ${Math.round(ballonTotalInterest)}` },
             { label: "Balloon Payment", value: `€ ${Math.round(balloonAmount)}` },
             { label: "Interest Rate", value: `${baseRate.toFixed(2)}%` }
           ]
@@ -136,6 +140,9 @@ export const OfferComparison = () => {
       term: offer.term,
       downPayment: offer.downPayment,
       totalCost: offer.totalCost,
+      ...(category === "traditional" && {
+      totalInterest: offer.totalInterest,
+      }),
       ...(category === "lease" && {
         residualValue: offer.residualValue,
         mileageLimit: offer.mileageLimit,
