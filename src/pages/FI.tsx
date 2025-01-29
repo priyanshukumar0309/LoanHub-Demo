@@ -2,11 +2,13 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { User, MapPin, Briefcase, Clock, Target, CheckCircle } from 'lucide-react';
+import { Header } from "@/components/Header";
 
 const PersonaPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-volvo-accent">
       {/* Header Section */}
+      <Header />
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
         {/* Profile Header */}
         <div className="relative h-48 bg-gradient-to-r from-blue-600 to-blue-800">
