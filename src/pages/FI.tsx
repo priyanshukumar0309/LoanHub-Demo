@@ -16,7 +16,7 @@ const PersonaPage = () => {
           <div className="absolute -bottom-20 left-8">
             <div className="w-32 h-32 rounded-full border-4 border-white bg-gray-200 overflow-hidden">
               <img
-                src="./public/fi.jpg"
+                src="/fi.jpg"
                 alt="David Thompson"
                 className="w-full h-full object-cover"
               />
