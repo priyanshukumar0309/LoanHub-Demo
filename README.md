@@ -1,69 +1,89 @@
-# Welcome to your Lovable project
 
-## Project info
+# Car LoanHub - Italian Auto Finance Application
 
-**URL**: https://lovable.dev/projects/c5cb4e9a-5b03-4afe-a477-2c4649e1c8c9
+## Overview
 
-## How can I edit this code?
+Car LoanHub is a comprehensive web application designed to streamline the car financing process for Italian customers. The application guides users through a seamless journey from application to approval, providing competitive loan offers from leading Italian banks.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **User-friendly Application Process**: Simple step-by-step flow from customer details to offer selection
+- **Finance Calculator**: Interactive tool to calculate loan terms based on car price, down payment, income, and preferred term
+- **Multiple Offer Comparison**: Compare offers from top Italian banks including Santander, UniCredit, and BNP Paribas
+- **SPID Integration**: Secure authentication using Italy's digital identity system
+- **Responsive Design**: Optimized experience across all device sizes
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c5cb4e9a-5b03-4afe-a477-2c4649e1c8c9) and start prompting.
+## Technology Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+This project is built with modern web technologies:
 
-**Use your preferred IDE**
+- **React**: Front-end library for building the user interface
+- **TypeScript**: Type-safe JavaScript for improved development experience
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **React Router**: For handling navigation between pages
+- **React Query**: For efficient data fetching and state management
+- **Shadcn UI**: Component library for consistent design elements
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js (v16 or later)
+- npm or yarn package manager
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Clone the repository
+git clone <repository-url>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Navigate to the project directory
+cd car-loanhub
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at http://localhost:8080
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+car-loanhub/
+├── public/           # Static assets including bank logos
+├── src/
+│   ├── components/   # Reusable UI components
+│   ├── pages/        # Page components
+│   ├── hooks/        # Custom React hooks
+│   ├── lib/          # Utility functions
+│   └── App.tsx       # Main application component
+└── README.md         # Project documentation
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Application Flow
 
-## What technologies are used for this project?
+1. **Homepage**: Introduction to the service
+2. **Customer Details**: Collect personal information with SPID verification
+3. **Finance Calculator**: Configure loan parameters
+4. **Offers**: Compare loan offers from different banks
+5. **Terms and Conditions**: Review and accept loan agreement
+6. **Success**: Confirmation of application submission
 
-This project is built with .
+## Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The application can be deployed to any static hosting service:
 
-## How can I deploy this project?
+```bash
+# Build the application
+npm run build
 
-Simply open [Lovable](https://lovable.dev/projects/c5cb4e9a-5b03-4afe-a477-2c4649e1c8c9) and click on Share -> Publish.
+# The build output will be in the 'dist' directory
+# Deploy these files to your hosting service
+```
 
-## I want to use a custom domain - is that possible?
+## License
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is licensed under the MIT License - see the LICENSE file for details.
