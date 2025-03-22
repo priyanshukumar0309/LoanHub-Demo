@@ -1,5 +1,6 @@
 
 # Car LoanHub - Italian Auto Finance Application
+![Portfolio Preview](public/og-image-loanhub.png)
 
 ## Overview
 
